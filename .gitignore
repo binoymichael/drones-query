@@ -24,4 +24,4 @@ _testmain.go
 *.prof
 
 /coverage.out
-/drones-events
+/drones-query
