@@ -1,3 +1,4 @@
+[![wercker status](https://app.wercker.com/status/51c65e97fa901561dc1720e1ed598106/m "wercker status")](https://app.wercker.com/project/bykey/51c65e97fa901561dc1720e1ed598106)
 
 # Drone Army Query Service
 Service for the Event Sourcing/CQRS sample that fulfills the role of query service. Exposes a simple API for
