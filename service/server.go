@@ -31,7 +31,7 @@ func NewServer() *negroni.Negroni {
 
 func initRoutes(mx *mux.Router, formatter *render.Render, repo eventRepository) {
 	mx.HandleFunc("/drones/{droneId}/lastTelemetry", lastTelemetryHandler(formatter, repo)).Methods("GET")
-	mx.HandleFunc("/drones/{droneId}/lastAlert", lastAlertHandler(formatter)).Methods("GET")
+	mx.HandleFunc("/drones/{droneId}/lastAlert", lastAlertHandler(formatter, repo)).Methods("GET")
 	mx.HandleFunc("/drones/{droneId}/lastPosition", lastPositionHandler(formatter, repo)).Methods("GET")
 }
 

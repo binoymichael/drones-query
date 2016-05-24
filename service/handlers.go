@@ -12,9 +12,16 @@ import (
 vars := mux.Vars(req)
 		matchID := vars["id"]
 		match, err := repo.getMatch(matchID)*/
-func lastAlertHandler(formatter *render.Render) http.HandlerFunc {
+func lastAlertHandler(formatter *render.Render, repo eventRepository) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		formatter.JSON(w, http.StatusOK, "tbd")
+		droneID := getDroneID(req)
+		fmt.Printf("Looking up last alert event for drone %s\n", droneID)
+		event, err := repo.GetAlertEvent(droneID)
+		if err == nil {
+			formatter.JSON(w, http.StatusOK, &event)
+		} else {
+			formatter.JSON(w, http.StatusInternalServerError, err.Error())
+		}
 	}
 }
 
@@ -22,7 +29,7 @@ func lastTelemetryHandler(formatter *render.Render, repo eventRepository) http.H
 	return func(w http.ResponseWriter, req *http.Request) {
 
 		droneID := getDroneID(req)
-		fmt.Printf("Looking up last telemetry event for drone %s", droneID)
+		fmt.Printf("Looking up last telemetry event for drone %s\n", droneID)
 		event, err := repo.GetTelemetryEvent(droneID)
 		if err == nil {
 			formatter.JSON(w, http.StatusOK, &event)
@@ -36,7 +43,7 @@ func lastPositionHandler(formatter *render.Render, repo eventRepository) http.Ha
 	return func(w http.ResponseWriter, req *http.Request) {
 
 		droneID := getDroneID(req)
-		fmt.Printf("Looking up last position event for drone %s", droneID)
+		fmt.Printf("Looking up last position event for drone %s\n", droneID)
 		event, err := repo.GetPositionEvent(droneID)
 		if err == nil {
 			formatter.JSON(w, http.StatusOK, &event)
