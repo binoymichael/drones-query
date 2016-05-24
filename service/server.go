@@ -37,7 +37,7 @@ func initRoutes(mx *mux.Router, formatter *render.Render, repo eventRepository) 
 
 func initRepository() (repo eventRepository) {
 	appEnv, _ := cfenv.Current()
-	dbServiceURI, err := cftools.GetVCAPServiceProperty("mongo-eventrollup", "uri", appEnv)
+	dbServiceURI, err := cftools.GetVCAPServiceProperty("mongo-eventrollup", "url", appEnv)
 	if err != nil || len(dbServiceURI) == 0 {
 		if err != nil {
 			fmt.Printf("\nError retreieving database configuration: %v\n", err)
