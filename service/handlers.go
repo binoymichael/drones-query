@@ -8,10 +8,6 @@ import (
 	"github.com/unrolled/render"
 )
 
-/*
-vars := mux.Vars(req)
-		matchID := vars["id"]
-		match, err := repo.getMatch(matchID)*/
 func lastAlertHandler(formatter *render.Render, repo eventRepository) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		droneID := getDroneID(req)
