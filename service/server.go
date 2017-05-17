@@ -1,10 +1,6 @@
 package service
 
 import (
-	"fmt"
-
-	"github.com/cloudfoundry-community/go-cfenv"
-	"github.com/cloudnativego/cf-tools"
 	"github.com/cloudnativego/cfmgo"
 	"github.com/cloudnativego/drones-events/mongo"
 	"github.com/codegangsta/negroni"
@@ -36,20 +32,21 @@ func initRoutes(mx *mux.Router, formatter *render.Render, repo eventRepository) 
 }
 
 func initRepository() (repo eventRepository) {
-	appEnv, _ := cfenv.Current()
-	dbServiceURI, err := cftools.GetVCAPServiceProperty("mongo-eventrollup", "url", appEnv)
-	if err != nil || len(dbServiceURI) == 0 {
-		if err != nil {
-			fmt.Printf("\nError retreieving database configuration: %v\n", err)
-		}
-		fmt.Println("MongoDB was not detected, using fake repository THIS IS BAD...")
-		//repo = NewFakeRepository()
-	} else {
+	//appEnv, _ := cfenv.Current()
+	//dbServiceURI, err := cftools.GetVCAPServiceProperty("mongo-eventrollup", "url", appEnv)
+	//if err != nil || len(dbServiceURI) == 0 {
+		//if err != nil {
+			//fmt.Printf("\nError retreieving database configuration: %v\n", err)
+		//}
+		//fmt.Println("MongoDB was not detected, using fake repository THIS IS BAD...")
+		////repo = NewFakeRepository()
+	//} else {
+    dbServiceURI := "mongodb://mongo:27017/events-database"
 		telemetryCollection := cfmgo.Connect(cfmgo.NewCollectionDialer, dbServiceURI, "telemetry")
 		positionsCollection := cfmgo.Connect(cfmgo.NewCollectionDialer, dbServiceURI, "positions")
 		alertsCollection := cfmgo.Connect(cfmgo.NewCollectionDialer, dbServiceURI, "alerts")
 		repo = mongo.NewEventRollupRepository(positionsCollection, alertsCollection, telemetryCollection)
-	}
+	//}
 
 	return
 }
