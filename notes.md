@@ -15,9 +15,9 @@ curl -i -X GET http://localhost:3002/drones/drone999/lastTelemetry
 ```
 
 # Kong setup
-drone-cmds api is listening  on localhost:3000
-drone-events service would be listening on localhost:3001
-and drone-query api would be listenting on localhost:3002
+drone-cmds api is listening  on localhost:3000  
+drone-events service would be listening on localhost:3001  
+and drone-query api would be listenting on localhost:3002  
 
 We could place kong api gateway in front of these services to route to the
 appropriate service
@@ -42,8 +42,8 @@ appropriate service
               kong
 ```
 
-Kong gateway is listening on port 8000
-Kong adming api is listenting on port 8001
+Kong gateway is listening on port 8000  
+Kong adming api is listenting on port 8001  
 
 # Adding apis to kong by sending requests to port 8001
 ```
@@ -66,9 +66,11 @@ Kong adming api is listenting on port 8001
 ```
 
 # Testing the whole setup
+```
 curl -i -X POST http://localhost:8000/command/api/cmds/telemetry \
      -H "Content-Type: application/json" \
      -d "{\"drone_id\":\"drone100\",\"battery\":22,\"uptime\":6900,\"core_temp\":21}"
 
 curl -i -X GET http://localhost:8000/query/drones/drone100/lastTelemetry
+```
 
