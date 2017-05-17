@@ -2,8 +2,7 @@ package main
 
 import (
 	"os"
-
-	"github.com/cloudnativego/drones-query/service"
+	"app/service"
 )
 
 func main() {
